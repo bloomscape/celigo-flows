@@ -1,0 +1,316 @@
+[
+  {
+    "generate": "entity",
+    "extract": "customer_id",
+    "internalId": true
+  },
+  {
+    "generate": "externalid",
+    "extract": "woocomerce-{{$.id}}",
+    "internalId": false
+  },
+  {
+    "generate": "shipaddr2",
+    "extract": "shipping.address_2",
+    "internalId": false
+  },
+  {
+    "generate": "shipcity",
+    "extract": "shipping.city",
+    "internalId": false
+  },
+  {
+    "generate": "shipcountry",
+    "extract": "shipping.country",
+    "internalId": false
+  },
+  {
+    "generate": "shipstate",
+    "extract": "shipping.state",
+    "internalId": false
+  },
+  {
+    "generate": "shipzip",
+    "extract": "shipping.postcode",
+    "internalId": false
+  },
+  {
+    "generate": "shippingcost",
+    "extract": "shipping_total",
+    "internalId": false
+  },
+  {
+    "generate": "shipmethod",
+    "extract": "{{#each shipping_lines as |line|}}{{#each line.meta_data as |meta|}}{{#compare meta.key \"==\" 'service_level'}}{{meta.value}}{{/compare}}{{/each}}{{/each}}",
+    "lookupName": "shipmethodLookup",
+    "internalId": true,
+    "discardIfEmpty": false,
+    "immutable": false
+  },
+  {
+    "conditional": {
+      "when": "extract_not_empty"
+    },
+    "generate": "terms",
+    "extract": "{{#compare payment_method \"!=\" 'klarna_payments'}} 4 {{/compare}}",
+    "internalId": true,
+    "discardIfEmpty": false,
+    "immutable": false
+  },
+  {
+    "generate": "orderstatus",
+    "extract": "status",
+    "lookupName": "orderstatusLookup",
+    "internalId": false
+  },
+  {
+    "generate": "billaddr1",
+    "extract": "billing.address_1",
+    "internalId": false
+  },
+  {
+    "generate": "billaddr2",
+    "extract": "billing.address_2",
+    "internalId": false
+  },
+  {
+    "generate": "billcity",
+    "extract": "billing.city",
+    "internalId": false
+  },
+  {
+    "generate": "billcountry",
+    "extract": "billing.country",
+    "internalId": false
+  },
+  {
+    "generate": "billstate",
+    "extract": "billing.state",
+    "internalId": false
+  },
+  {
+    "generate": "billzip",
+    "extract": "billing.postcode",
+    "internalId": false
+  },
+  {
+    "generate": "shipaddr1",
+    "extract": "shipping.address_1",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_woo_discount_total",
+    "extract": "{{#compare discount_total \"!=\" \"0.00\"}}{{discount_total}}{{else}}{{coupon_lines[*].discount}}{{/compare}}",
+    "dataType": "float",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_woo_coupon_code",
+    "extract": "coupon_lines[*].code",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_woo_order_id",
+    "extract": "id",
+    "dataType": "string",
+    "internalId": false
+  },
+  {
+    "extract": "{{#compare customer_id '>' '0'}}F{{else}}T{{/compare}}",
+    "generate": "is_woo_guest",
+    "internalId": false
+  },
+  {
+    "generate": "developer_log",
+    "hardCodedValue": "1",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_woo_ship_total",
+    "extract": "shipping_total",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_woo_order_total",
+    "extract": "total",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_total_shipping_tax_amount",
+    "extract": "shipping_tax",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_total_shipping_amount",
+    "extract": "shipping_total",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nm_total_tax_amount",
+    "extract": "total_tax",
+    "internalId": false
+  },
+  {
+    "generate": "trandate",
+    "extract": "date_created",
+    "internalId": false,
+    "extractDateFormat": "YYYY-MM-DDTHH:mm:ss",
+    "extractDateTimezone": "GMT",
+    "immutable": false,
+    "discardIfEmpty": false
+  },
+  {
+    "generate": "shipattention",
+    "extract": "shipping.company",
+    "internalId": false,
+    "immutable": false,
+    "discardIfEmpty": false
+  },
+  {
+    "generate": "billattention",
+    "extract": "billing.company",
+    "internalId": false,
+    "immutable": false,
+    "discardIfEmpty": false
+  },
+  {
+    "generate": "billaddressee",
+    "extract": "{{billing.first_name}} {{billing.last_name}}",
+    "internalId": false,
+    "immutable": false,
+    "discardIfEmpty": false
+  },
+  {
+    "generate": "shipaddressee",
+    "extract": "{{shipping.first_name}} {{shipping.last_name}}",
+    "internalId": false,
+    "immutable": false,
+    "discardIfEmpty": false
+  },
+  {
+    "generate": "custbody_nm_woo_tax_total",
+    "extract": "total_tax",
+    "internalId": false
+  },
+  {
+    "generate": "istaxable",
+    "discardIfEmpty": false,
+    "immutable": false,
+    "hardCodedValue": "true",
+    "internalId": false
+  },
+  {
+    "generate": "taxitem",
+    "discardIfEmpty": false,
+    "immutable": false,
+    "hardCodedValue": "6014",
+    "internalId": true
+  },
+  {
+    "generate": "otherrefnum",
+    "extract": "id",
+    "internalId": false,
+    "dataType": "string",
+    "discardIfEmpty": false,
+    "immutable": false
+  },
+  {
+    "extract": "{{#compare payment_method \"==\" 'stripe'}}{{transaction_id}}{{/compare}}",
+    "generate": "custbody_suitesync_authorization_code",
+    "internalId": false
+  },
+  {
+    "generate": "customform",
+    "discardIfEmpty": false,
+    "immutable": false,
+    "hardCodedValue": "174",
+    "internalId": true
+  },
+  {
+    "generate": "custbody_ecom_order_number",
+    "extract": "id",
+    "internalId": false,
+    "dataType": "number",
+    "discardIfEmpty": false,
+    "immutable": false
+  },
+  {
+    "extract": "payment_method_title",
+    "generate": "custbody_payment_method",
+    "internalId": false
+  },
+  {
+    "extract": "{{#each meta_data as |meta|}}{{#compare meta.key \"==\" '_duplicate_of'}}{{meta.value}}{{/compare}}{{/each}}",
+    "generate": "custbody_replacement_order_created_frm",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_cloned_order_created_frm",
+    "extract": "{{#each meta_data as |meta|}}{{#compare meta.key \"==\" '_duplicate_of'}}{{meta.value}}{{/compare}}{{/each}}",
+    "internalId": false
+  },
+  {
+    "hardCodedValue": "1",
+    "generate": "cseg1",
+    "internalId": true
+  },
+  {
+    "extract": "customer_note",
+    "generate": "custbody_shiphawk_notes",
+    "internalId": false
+  },
+  {
+    "extract": "{{#each meta_data as |meta|}}{{#compare meta.key \"==\" '_gift_recipient_email'}}{{meta.value}}{{/compare}}{{/each}}",
+    "generate": "custbody_gift_recipient_email",
+    "internalId": false
+  },
+  {
+    "generate": "checkExistingRecord",
+    "discardIfEmpty": false,
+    "immutable": false,
+    "hardCodedValue": "1",
+    "internalId": false
+  },
+  {
+    "generate": "celigo_write_log",
+    "discardIfEmpty": false,
+    "immutable": false,
+    "hardCodedValue": "true",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_klarna_id",
+    "extract": "{{#compare payment_method \"==\" 'klarna_payments'}}{{transaction_id}}{{/compare}}",
+    "internalId": false
+  },
+  {
+    "generate": "custbody_nova_coupon_data",
+    "extract": "{{{jsonSerialize coupon_lines}}}",
+    "internalId": false
+  },
+  {
+    "generate": "lineLevelDiscountEnabled",
+    "hardCodedValue": "0",
+    "internalId": false
+  },
+  {
+    "generate": "Gift Certificate Redemption : Gift Certificate (Name)",
+    "extract": "coupon_lines[*].code",
+    "internalId": false
+  },
+  {
+    "generate": "Gift Certificate Redemption : Amount Applied (Field ID: authcodeapplied)",
+    "extract": "coupon_lines[*].discount",
+    "internalId": false
+  },
+  {
+    "extract": "{{#compare payment_method \"==\" 'klarna_payments'}}8{{/compare}}",
+    "generate": "paymentmethod",
+    "internalId": true
+  },
+  {
+    "extract": "fee_lines[*].amount",
+    "generate": "handlingcost",
+    "internalId": false
+  }
+]

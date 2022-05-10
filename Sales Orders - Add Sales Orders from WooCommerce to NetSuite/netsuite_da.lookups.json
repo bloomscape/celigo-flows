@@ -1,0 +1,36 @@
+[
+  {
+    "name": "orderstatusLookup",
+    "allowFailures": true,
+    "map": {
+      "completed": "Pending Fulfillment"
+    },
+    "default": "Pending Fulfillment"
+  },
+  {
+    "name": "item_itemLookup",
+    "recordType": "item",
+    "resultField": "internalid",
+    "expression": "[[\"itemid\",\"is\",\"{{{line_items[*].sku}}}\"],\"OR\",[\"externalid\",\"is\",\"{{{line_items[*].sku}}}\"]]",
+    "allowFailures": false
+  },
+  {
+    "name": "shipmethodLookup",
+    "map": {
+      "ground": 9,
+      "3-day-air": 3,
+      "2-day-air": 2,
+      "next-day-air": "Next Day Shipping"
+    },
+    "allowFailures": true,
+    "default": "10"
+  },
+  {
+    "name": "expediteOrderRequestedLookup",
+    "map": {
+      "1": "True"
+    },
+    "allowFailures": true,
+    "default": "false"
+  }
+]
