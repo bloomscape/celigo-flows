@@ -15,22 +15,22 @@
     "allowFailures": false
   },
   {
-    "name": "shipmethodLookup",
-    "map": {
-      "ground": 9,
-      "3-day-air": 3,
-      "2-day-air": 2,
-      "next-day-air": "Next Day Shipping"
-    },
-    "allowFailures": true,
-    "default": "10"
-  },
-  {
     "name": "expediteOrderRequestedLookup",
     "map": {
       "1": "True"
     },
     "allowFailures": true,
     "default": "false"
+  },
+  {
+    "name": "shipmethodLookup",
+    "map": {
+      "ground": 9,
+      "3-day-air": 45740,
+      "2-day-air": 45741,
+      "next-day-air": "Next Day Shipping"
+    },
+    "allowFailures": true,
+    "default": "10"
   }
 ]

@@ -48,14 +48,14 @@
     "immutable": false
   },
   {
-    "conditional": {
-      "when": "extract_not_empty"
-    },
     "generate": "terms",
     "extract": "{{#compare payment_method \"!=\" 'klarna_payments'}} 4 {{/compare}}",
     "internalId": true,
     "discardIfEmpty": false,
-    "immutable": false
+    "immutable": false,
+    "conditional": {
+      "when": "extract_not_empty"
+    }
   },
   {
     "generate": "orderstatus",
@@ -311,6 +311,14 @@
   {
     "extract": "fee_lines[*].amount",
     "generate": "handlingcost",
+    "internalId": false
+  },
+  {
+    "extract": "{{#each shipping_lines.0.meta_data as |meta|}}{{#compare meta.key \"===\" 'expedited_shipping_requested'}}{{meta.value}}{{/compare}}{{/each}}",
+    "generate": "custbody_expedite_order_requested",
+    "discardIfEmpty": false,
+    "immutable": false,
+    "lookupName": "expediteOrderRequestedLookup",
     "internalId": false
   }
 ]
